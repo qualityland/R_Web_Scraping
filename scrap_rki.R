@@ -1,3 +1,6 @@
+# tutorial:
+# https://blog.rsquaredacademy.com/web-scraping/
+
 #library(tidyverse)
 library(rvest)
 
