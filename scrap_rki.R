@@ -12,7 +12,11 @@ tables <- content %>% html_table(fill = TRUE)
 
 first_table <- tables[[1]]
 
+names(first_table)[-1] <- first_table [1,-1]
+
 first_table <- first_table[-1,]
+
+first_table
 
 library(janitor)
 
