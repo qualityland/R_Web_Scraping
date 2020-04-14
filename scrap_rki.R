@@ -1,59 +1,66 @@
-# tutorial:
-# https://blog.rsquaredacademy.com/web-scraping/
-
-#library(tidyverse)
 library(rvest)
+library(dplyr)
+library(ggplot2)
 
-url <- "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html"
+# URL des Robert-Koch-Instituts
+url <-
+  "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html"
 
+
+# HTML Seite lesen und in ein XML Dokument ueberfuehren
 content <- read_html(url)
 
-tables <- content %>% html_table(fill = TRUE)
 
-first_table <- tables[[1]]
-
-names(first_table)[-1] <- first_table [1,-1]
-
-first_table <- first_table[-1,]
-
-first_table
-
-library(janitor)
-
-first_table <- first_table %>% clean_names()
-
-first_table %>% 
-  mutate(lifetime_gross = parse_number(lifetime_gross)) %>% 
-  arrange(desc(lifetime_gross)) %>% 
-  head(20) %>% 
-  mutate(title = fct_reorder(title, lifetime_gross)) %>% 
-  ggplot() + geom_bar(aes(y = title, x = lifetime_gross), stat = "identity", fill = "blue") +
-  labs(title = "Top 20 Grossing movies in US and Canada",
-       caption = "Data Source: Wikipedia ")
+# Liste enthaltener Tabellen extrahieren
+tables <- content %>% html_table()
 
 
-
-first_table %>% 
-  mutate(lifetime_gross_2 = parse_number(lifetime_gross_2)) %>% 
-  arrange(desc(lifetime_gross_2)) %>% 
-  head(20) %>% 
-  mutate(title = fct_reorder(title, lifetime_gross_2)) %>% 
-  ggplot() + geom_bar(aes(y = title, x = lifetime_gross_2), stat = "identity", fill = "blue") +
-  labs(title = "Top 20 Grossing movies in US and Canada",
-       caption = "Data Source: Wikipedia ")
+# COVID-19 Tabelle aus tables Liste extrahieren
+c19_table <- tables[[1]]
 
 
-
-second_table <- tables[[2]]
-
-second_table %>% 
-  clean_names() -> second_table
+# erste Row mit ueberfluessigen Header-Informationen entfernen
+c19_table <- c19_table[-1, ]
 
 
-second_table %>% 
-  mutate(adjusted_gross = parse_number(adjusted_gross)) %>% 
-  group_by(year) %>% 
-  summarise(total_adjusted_gross = sum(adjusted_gross)) %>% 
-  arrange(desc(total_adjusted_gross)) %>% 
-  ggplot() + geom_line(aes(x = year,y = total_adjusted_gross, group = 1))
+# column names setzen
+names(c19_table) <-
+  c("Bundesland",
+    "n_Infektionen",     # Anzahl der Infektionen
+    "n_Neu_Inf",         # Anzahl Neuinfektionen (im Vgl. zum Vortag)
+    "n_Pro_100k",        # Anzahl Infektionen pro 100'000 Einwohner
+    "n_Todesfaelle")     # Anzahl Todesfaelle
 
+
+# quantitative Columns in numerischen Datentyp wandeln
+c19_table <- c19_table %>% 
+  #mutate_at(vars(starts_with('n_')), funs(as.character(.))) %>% 
+  mutate_at(vars(starts_with('n_')), funs(gsub("\\.", "", .))) %>% 
+  mutate_at(vars(starts_with('n_')), funs(as.numeric(.)))
+
+# Visualisierungen
+
+# Gesamt-Infektionen
+ggplot(data = c19_table[1:16, ]) +
+  geom_col(aes(x = n_Infektionen, y = Bundesland)) +
+  labs(title = "Gesamt-Infektionen", 
+       x = "Infektionen")
+
+# Neuinfektionen
+ggplot(data = c19_table[1:16,]) +
+  geom_col(aes(x = n_Neu_Inf, y = Bundesland)) +
+  labs(title = "Neu-Infektionen",
+       subtitle = "Im Vergleich zum Vortag",
+       x = "Neu-Infektionen")
+
+# Infektionen pro 100'000 Einwohner
+ggplot(data = c19_table[1:16, ]) +
+  geom_col(aes(x = n_Pro_100k, y = Bundesland)) +
+  labs(title = "Infektionen pro 100'000 Einwohner", 
+       x = "Inf pro 100k Einw")
+
+# Todesfaelle
+ggplot(data = c19_table[1:16, ]) +
+  geom_col(aes(x = n_Todesfaelle, y = Bundesland)) +
+  labs(title = "Todesfälle", 
+       x = "Anzahl Todesfälle")

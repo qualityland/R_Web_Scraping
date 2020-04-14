@@ -1,0 +1,15 @@
+rvest Resourcen
+
+r-project.org:
+https://cran.r-project.org/web/packages/rvest/
+
+tidyverse:
+https://rvest.tidyverse.org/index.html
+
+
+Tutorials:
+Garret Grolemunds 2016 useR webinar:
+https://resources.rstudio.com/webinars/extracting-data-from-the-web-part-2
+
+Slides:
+https://github.com/ropensci-training/user2016-tutorial
