@@ -11,24 +11,26 @@ read_html(url) %>%
   html_text()
 
 
-# HTML Seite lesen und in ein XML Dokument ueberfuehren
+## Schritt für Schritt:
+# 1. HTML Seite lesen und in ein XML Dokument überführen
 content <- read_html(url)
 class(content)
 content
 
 
-# alle H5 Ueberschriften extrahieren...
+# 2. alle H5 Überschriften extrahieren...
 headings <- html_nodes(content, "h5")
 headings
 
 
-# ...und HTML Elemente entfernen
+# 3. ...und HTML Elemente entfernen
 names <- html_text(headings)
 names
 
 
-
-# Extraktion der Kontaktdaten
+## Etwas umfangreicher:
+# Extraktion von Kontaktdaten
+library(dplyr)
 library(tidyr)
 library(stringr)
 
@@ -38,8 +40,9 @@ contacts <- read_html(url) %>%
   matrix(ncol=3, byrow=TRUE, dimnames=list(c(), c("name", "job_title", "phone"))) %>% 
   data.frame() %>% 
   separate(name, into = c("name", "title"), sep = ", ") %>% 
-  mutate(phone = str_replace(phone, pattern = "Telefon ", replacement = "")) %>% 
-  mutate(phone = str_replace(phone, pattern = "E-Mail", replacement = ""))
+  mutate(phone = str_remove(phone, pattern = "Telefon ")) %>% 
+  mutate(phone = str_remove(phone, pattern = "E-Mail"))
 
+str(contacts)
 contacts
-
+str_
