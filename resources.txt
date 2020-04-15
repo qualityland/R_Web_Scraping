@@ -13,3 +13,19 @@ https://resources.rstudio.com/webinars/extracting-data-from-the-web-part-2
 
 Slides:
 https://github.com/ropensci-training/user2016-tutorial
+
+
+online Book & Video:
+https://ubc-dsci.github.io/introduction-to-datascience/reading.html#scraping-data-off-the-web-using-r
+
+
+HTML Slides
+HTML:
+ 8 - 10
+12 - 14
+
+CSS:
+19 - 28
+
+rvest:
+33 - 

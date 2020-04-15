@@ -1,7 +1,7 @@
 ---
 title: "Web Scraping mit R"
 author: "Stefan Schmidt"
-date: "4/14/2020"
+date: "16.04.2020"
 output: beamer_presentation
 ---
 
@@ -11,23 +11,29 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Web Scraping
 
-- engl. "vom Web abkratzen", auch "Web Harvesting"
-
+- engl. "aus dem Web kratzen" (auch "Web Ha**rvest**ing")
 - Verfahren zum automatisierten Auslesen von Texten / Daten von Webseiten (HTML[^1])
-
 - Anwendung: Wenn keine API [^2] zur Verfügung steht
-
 - in R: steht mit **rvest** im tidyverse bereits ein Package bereit
 
 [^1]: Hypertext Markup Language
 [^2]: Application Programming Interface
 
 
+## Die Idee dahinter
+
+- Informationen aus dem HTML Dokument extrahieren
+- mit Hilfe von CSS Selektoren die Information identifizieren
+
+
+
 ## Rechtliche Probleme
 
 - Urheberrechte
-- Nutzungsbedingungen (Verbot automatischen Auslesens)
-- 
+- Nutzungsbedingungen (Verbot automatischen Auslesens?)
+- Inhalt der robots.txt Datei prüfen
+
+
 
 
 

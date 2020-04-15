@@ -12,8 +12,9 @@ content <- read_html(url)
 
 
 # Liste enthaltener Tabellen extrahieren
-tables <- content %>% html_table()
-
+tables <- html_table(content)
+str(tables)
+tables
 
 # COVID-19 Tabelle aus tables Liste extrahieren
 c19_table <- tables[[1]]
@@ -34,7 +35,6 @@ names(c19_table) <-
 
 # quantitative Columns in numerischen Datentyp wandeln
 c19_table <- c19_table %>% 
-  #mutate_at(vars(starts_with('n_')), funs(as.character(.))) %>% 
   mutate_at(vars(starts_with('n_')), funs(gsub("\\.", "", .))) %>% 
   mutate_at(vars(starts_with('n_')), funs(as.numeric(.)))
 

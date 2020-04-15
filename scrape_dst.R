@@ -28,12 +28,15 @@ names <- html_text(headings)
 names
 
 
+
+
 ## Etwas umfangreicher:
 # Extraktion von Kontaktdaten
 library(dplyr)
 library(tidyr)
 library(stringr)
 
+# Kontakt-Informationen
 contacts <- read_html(url) %>% 
   html_nodes("p, h5") %>% 
   html_text() %>% 
@@ -45,4 +48,21 @@ contacts <- read_html(url) %>%
 
 str(contacts)
 contacts
-str_
+
+
+# Bilder
+images <- read_html(url) %>% 
+  html_nodes("img")
+
+images
+
+html_attr(images, "src")
+
+
+
+# Studienvorlagen
+vorlagen <- read_html("https://studienwegweiser.dkfbasel.ch/vorlagen") %>% 
+  html_nodes("td") %>% 
+  html_text()
+
+vorlagen
