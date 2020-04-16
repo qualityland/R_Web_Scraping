@@ -9,29 +9,110 @@ output: beamer_presentation
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+
+## Agenda
+
+- Web Scraping
+
+- Review: HTML[^html] und CSS[^css] Selektoren
+
+- R Package: rvest
+
+- Werkzeug: selectorGadget
+
+- Rechtliche Bedenken
+
+[^html]: Hypertext Markup Language
+
+[^css]: Cascading Style Sheets
+
+
+# Web Scraping
+
+
 ## Web Scraping
 
+Was ist das?
+
 - engl. "aus dem Web kratzen" (auch "Web Ha**rvest**ing")
-- Verfahren zum automatisierten Auslesen von Texten / Daten von Webseiten (HTML[^1])
-- Anwendung: Wenn keine API [^2] zur Verfügung steht
-- in R: steht mit **rvest** im tidyverse bereits ein Package bereit
 
-[^1]: Hypertext Markup Language
-[^2]: Application Programming Interface
-
-
-## Die Idee dahinter
-
-- Informationen aus dem HTML Dokument extrahieren
-- mit Hilfe von CSS Selektoren die Information identifizieren
+- Verfahren zum automatisierten Auslesen von Texten / Daten von Webseiten (HTML)
 
 
 
-## Rechtliche Probleme
+## Web Scraping
+
+Wann wendet man es an?
+
+- Wenn zur Extraktion der Informationen keine API [^api] zur Verfügung steht
+
+- Also keine Möglichkeit besteht definiert und sauber (z.B. via Web Service,
+Connector, SQL...) auf die Information zuzugreifen
+
+[^api]: Application Programming Interface
+
+
+
+## Web Scraping
+
+Die Idee dahinter
+
+- Informationen aus dem HTML Dokument extrahieren (Achtung: Schnell sehr umfangreich!)
+
+- mit Hilfe von CSS Selektoren die interessanten Information identifizieren
+
+
+
+## Web Scraping
+
+In R:
+
+- steht mit **rvest** im tidyverse bereits ein Package bereit
+
+
+
+# Review: HTML und CSS Selektoren
+
+
+
+# R Package: rvest
+
+
+
+# Werkzeug: selectorGadget
+
+
+
+# Rechtliche Bedenken
+
+
+
+## Rechtliche Bedenken
 
 - Urheberrechte
 - Nutzungsbedingungen (Verbot automatischen Auslesens?)
-- Inhalt der robots.txt Datei prüfen
+- ggf. Inhalt der robots.txt Datei prüfen
+
+
+
+# Zusammenfassung
+
+
+## Zusammenfassung
+
+- Prinzip: Informationen aus HTML extrahieren;
+dabei HTML/CSS Strukturen nutzen um die interessante Information
+auf umfangreichen Webseiten zu identifizieren
+
+- im R Package **rvest** stehen die dazu erforderlichen Funktionen bereit
+
+- mit dem Bookmarklet **selectorGadget** lassen sich leicht geeignete CSS
+Selektoren finden
+
+- immer erst die rechtliche Lage überprüfen
+
+
+# Vielen Dank!
 
 
 
